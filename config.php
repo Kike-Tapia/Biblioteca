@@ -12,10 +12,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 }
 
 // Configuración de la base de datos
-define('DB_HOST', 'localhost');
-define('DB_USER', 'root');
-define('DB_PASS', '');
-define('DB_NAME', 'biblioteca');
+define('DB_HOST', '185.232.14.52');
+define('DB_USER', 'u760464709_20005505_usr');
+define('DB_PASS', 'M;k4=5z3OB&L');
+define('DB_NAME', 'u760464709_20005505_bd');
 
 // Función para conectar a la base de datos
 function getConnection() {
