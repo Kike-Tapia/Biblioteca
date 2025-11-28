@@ -1,0 +1,58 @@
+{
+    "name": "Sistema de Gestión de Biblioteca",
+    "short_name": "Biblioteca PWA",
+    "description": "Aplicación web progresiva para la gestión de biblioteca con notificaciones push",
+    "start_url": "./",
+    "display": "standalone",
+    "background_color": "#6366f1",
+    "theme_color": "#6366f1",
+    "orientation": "portrait-primary",
+    "icons": [
+        {
+            "src": "icon.svg",
+            "sizes": "any",
+            "type": "image/svg+xml",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "icon-192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "icon-512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any maskable"
+        }
+    ],
+    "categories": ["education", "productivity"],
+    "screenshots": [],
+    "shortcuts": [
+        {
+            "name": "Nuevo Libro",
+            "short_name": "Nuevo",
+            "description": "Crear un nuevo libro",
+            "url": "/?action=new-libro",
+            "icons": [
+                {
+                    "src": "icon-192.png",
+                    "sizes": "192x192"
+                }
+            ]
+        },
+        {
+            "name": "Nueva Calificación",
+            "short_name": "Calificar",
+            "description": "Crear una nueva calificación",
+            "url": "/?action=new-calificacion",
+            "icons": [
+                {
+                    "src": "icon-192.png",
+                    "sizes": "192x192"
+                }
+            ]
+        }
+    ]
+}

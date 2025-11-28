@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generador de Iconos PWA</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #6366f1;
+        }
+        .icon-preview {
+            margin: 20px 0;
+            text-align: center;
+        }
+        canvas {
+            border: 1px solid #ddd;
+            margin: 10px;
+        }
+        button {
+            background: #6366f1;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+            font-size: 16px;
+        }
+        button:hover {
+            background: #4f46e5;
+        }
+        .instructions {
+            background: #f0f9ff;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Generador de Iconos PWA</h1>
+        <div class="instructions">
+            <p><strong>Instrucciones:</strong></p>
+            <ol>
+                <li>Haz clic en "Generar Iconos" para crear los iconos en los canvas</li>
+                <li>Haz clic derecho en cada canvas y selecciona "Guardar imagen como..."</li>
+                <li>Guarda como "icon-192.png" y "icon-512.png" respectivamente</li>
+                <li>Coloca los archivos en la raíz del proyecto</li>
+            </ol>
+        </div>
+        
+        <button onclick="generateIcons()">Generar Iconos</button>
+        
+        <div class="icon-preview">
+            <h3>Icono 192x192</h3>
+            <canvas id="icon192" width="192" height="192"></canvas>
+            <br>
+            <button onclick="downloadIcon('icon192', 'icon-192.png')">Descargar 192x192</button>
+        </div>
+        
+        <div class="icon-preview">
+            <h3>Icono 512x512</h3>
+            <canvas id="icon512" width="512" height="512"></canvas>
+            <br>
+            <button onclick="downloadIcon('icon512', 'icon-512.png')">Descargar 512x512</button>
+        </div>
+    </div>
+
+    <script>
+        function generateIcons() {
+            // Generar icono 192x192
+            const canvas192 = document.getElementById('icon192');
+            const ctx192 = canvas192.getContext('2d');
+            drawIcon(ctx192, 192);
+            
+            // Generar icono 512x512
+            const canvas512 = document.getElementById('icon512');
+            const ctx512 = canvas512.getContext('2d');
+            drawIcon(ctx512, 512);
+        }
+
+        function drawIcon(ctx, size) {
+            // Fondo con gradiente
+            const gradient = ctx.createLinearGradient(0, 0, size, size);
+            gradient.addColorStop(0, '#6366f1');
+            gradient.addColorStop(1, '#4f46e5');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, size, size);
+            
+            // Calcular dimensiones proporcionales
+            const padding = size * 0.1;
+            const buildingWidth = size - (padding * 2);
+            const buildingHeight = size * 0.6;
+            const buildingX = padding;
+            const buildingY = size * 0.2;
+            const cornerRadius = size * 0.05;
+            
+            // Edificio principal
+            ctx.fillStyle = '#ffffff';
+            ctx.beginPath();
+            ctx.roundRect(buildingX, buildingY, buildingWidth, buildingHeight, cornerRadius);
+            ctx.fill();
+            
+            // Ventanas
+            const windowSize = size * 0.125;
+            const windowSpacing = size * 0.15;
+            const windowStartX = buildingX + size * 0.2;
+            const windowStartY = buildingY + size * 0.15;
+            
+            // 4 ventanas
+            for (let row = 0; row < 2; row++) {
+                for (let col = 0; col < 2; col++) {
+                    const x = windowStartX + col * (windowSize + windowSpacing);
+                    const y = windowStartY + row * (windowSize + windowSpacing);
+                    ctx.fillStyle = '#6366f1';
+                    ctx.beginPath();
+                    ctx.roundRect(x, y, windowSize, windowSize, size * 0.02);
+                    ctx.fill();
+                }
+            }
+            
+            // Sol/Amarillo en la parte superior
+            ctx.fillStyle = '#fbbf24';
+            ctx.beginPath();
+            ctx.arc(size / 2, size * 0.1, size * 0.08, 0, Math.PI * 2);
+            ctx.fill();
+        }
+
+        // Polyfill para roundRect si no está disponible
+        if (!CanvasRenderingContext2D.prototype.roundRect) {
+            CanvasRenderingContext2D.prototype.roundRect = function(x, y, width, height, radius) {
+                this.beginPath();
+                this.moveTo(x + radius, y);
+                this.lineTo(x + width - radius, y);
+                this.quadraticCurveTo(x + width, y, x + width, y + radius);
+                this.lineTo(x + width, y + height - radius);
+                this.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+                this.lineTo(x + radius, y + height);
+                this.quadraticCurveTo(x, y + height, x, y + height - radius);
+                this.lineTo(x, y + radius);
+                this.quadraticCurveTo(x, y, x + radius, y);
+                this.closePath();
+            };
+        }
+
+        function downloadIcon(canvasId, filename) {
+            const canvas = document.getElementById(canvasId);
+            const link = document.createElement('a');
+            link.download = filename;
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        }
+
+        // Generar automáticamente al cargar
+        window.onload = generateIcons;
+    </script>
+</body>
+</html>
+
