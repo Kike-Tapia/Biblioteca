@@ -212,4 +212,5 @@ Este proyecto es de uso académico y puede modificarse libremente.
 
 🙌 Autor
 
-Proyecto desarrollado por Enrique Tapia como parte de una práctica académica.
+Proyecto desarrollado por Enrique Tapia y Luis Luna como parte de una práctica académica.
+
