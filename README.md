@@ -5,74 +5,78 @@ Aplicación Web Progresiva (PWA) con soporte offline, CRUD, autenticación, Inde
 🚀 Descripción del Proyecto
 
 Biblioteca PWA es una aplicación diseñada para gestionar libros, usuarios, calificaciones y notificaciones dentro de un entorno web moderno.
-Soporta funcionamiento sin conexión, envío de notificaciones push, almacenamiento local con IndexedDB y sincronización con un servidor mediante APIs en PHP.
+Soporta funcionamiento sin conexión, envío de notificaciones push, almacenamiento en IndexedDB y sincronización con un servidor mediante APIs en PHP.
 
-Este proyecto demuestra el uso de:
+Esta PWA fue desarrollada como parte de un proyecto académico para demostrar:
 
-Service Worker
+Uso de Service Worker
 
 Manejo de caché
 
-Modo offline
+Funcionalidad offline
 
 Push Notifications
 
 REST API con PHP y MySQL
 
-CRUD
+CRUD completo
 
-Manejo de sesión
+Manejo de sesión sin frameworks
 
-Manifest e instalación como PWA
+Manifest y archivo de instalación como App
 
 📌 Características Principales
-1. PWA con modo offline
+✅ 1. PWA con modo offline
+
+Service Worker configurado con:
 
 Cache First para archivos estáticos
 
 Network First para API
 
-Fallback offline
+Manejo de errores offline
 
-Background Sync (estructura preparada)
+Sincronización en segundo plano
 
-2. Notificaciones Push
+✅ 2. Notificaciones Push
 
-Recepción de notificaciones en segundo plano
+Recepción de notificaciones mediante push event
 
-Manejo del evento push
+Uso de VAPID Keys / Firebase Cloud Messaging (dependiendo de implementación)
 
-Vibración, iconos e interacciones
+Service Worker encargado de mostrar las notificaciones
 
-Integración con tokens de usuario
+Vibración, badge, icono y acciones
 
-3. CRUD completo
+✅ 3. CRUD completo
 
-Módulos:
+Módulos gestionados:
 
-Libros
+📘 Libros
 
-Usuarios
+👤 Usuarios
 
-Calificaciones
+⭐ Calificaciones
 
-Notificaciones
+🔔 Notificaciones (desde API)
 
-4. Autenticación
+✅ 4. Autenticación
 
-Login con verificación desde API
+Login sencillo mediante API
 
-Sesión persistente en el navegador
+Control de acceso a módulos
 
-5. IndexedDB
+Sesión persistente
 
-Almacenamiento local de libros y calificaciones
+✅ 5. IndexedDB
 
-Consultas sin internet
+Base local para almacenar datos de libros y calificaciones
 
-Sincronización cuando vuelve la conexión
+Permite consultar datos sin internet
 
-🗂️ Estructura del Proyecto
+Sincronización cuando la red vuelve
+
+🗂️ Estructura de Archivos
 📁 raiz/
 │── index.html
 │── app.js
@@ -88,51 +92,52 @@ Sincronización cuando vuelve la conexión
       └── notificaciones.php
 
 ⚙️ Instalación
-1. Clonar el proyecto
+1️⃣ Clonar el proyecto
 git clone https://github.com/tu-repo/biblioteca-pwa.git
 
-2. Configurar la base de datos en /api/config.php
+2️⃣ Configurar la API
+
+Editar /api/config.php con los datos de tu base de datos:
+
 define("DB_HOST", "localhost");
 define("DB_USER", "root");
 define("DB_PASS", "");
 define("DB_NAME", "biblioteca");
 
-3. Servir el proyecto desde un servidor
+3️⃣ Servidor recomendado
 
-Requerido para que el Service Worker funcione:
+Para que el Service Worker funcione:
 
-XAMPP
+Render
 
-WAMP
+XAMPP / WAMP / MAMP
 
-MAMP
+Apache o Nginx
 
-Apache / Nginx
-
-Render / Vercel / Netlify
+⚠️ No funciona ejecutando el HTML directamente con file://.
 
 🛠️ Tecnologías Utilizadas
-Tecnología	Función
+Tecnología	Uso
 HTML / CSS / JS	Interfaz y lógica
-IndexedDB	Almacenamiento offline
-Service Worker	Cache, sync y push
-PHP	Backend
-MySQL	Base de datos
+IndexedDB	Base de datos offline
+Service Worker	Cache, sync, notificaciones
+PHP (API)	Backend y CRUD
+MySQL	Almacenamiento principal
+PWA (manifest + sw)	Instalación y offline
 Push API	Notificaciones
-PWA	Instalación y modo offline
 🔔 Notificaciones Push
 
 El archivo sw.js maneja:
 
-Recepción de push mediante self.addEventListener('push')
+Evento push
 
-Mostrar notificaciones incluso con la app cerrada
+Evento notificationclick
 
-Vibración, iconos y badge
+Mostrar notificaciones con iconos, vibración y badge
 
-Evento notificationclick para abrir la app
+Comunicación con la app mediante postMessage()
 
-Ejemplo del manejador:
+Ejemplo dentro del Service Worker:
 
 self.addEventListener('push', (event) => {
     const data = event.data.json();
@@ -148,63 +153,63 @@ self.addEventListener('push', (event) => {
 📡 API REST (PHP)
 /api/notificaciones.php
 
-Funciones implementadas:
+Permite:
 
-Obtener notificaciones
+✔ Obtener notificaciones
 
-Crear nuevas notificaciones
+✔ Crear nuevas notificaciones
 
-Integración con tokens push
+✔ Integrarse con tokens de push
 
-Ejemplo de payload:
+Ejemplo de cuerpo de notificación:
 
 {
   "titulo": "Nuevo libro",
-  "mensaje": "Se agregó un nuevo libro",
+  "mensaje": "Se ha añadido un nuevo libro a la biblioteca",
   "modulo": "Libros",
   "usuario": "admin"
 }
 
 📦 Manifest
 
-El archivo manifest.json permite:
+manifest.json permite instalar la app:
 
-Instalar la app
+Iconos
 
-Mostrar iconos
+Nombre de la app
 
-Definir tema
+Startup screen
 
-Habilitar pantalla de inicio
+Configuración de orientación
 
 📲 Instalación como App
 
-El navegador muestra el botón “Instalar” porque:
+El navegador mostrará el botón "Instalar" automáticamente porque:
 
-La app tiene un manifest válido
+Tiene Service Worker activo
 
-El Service Worker está activo
+Tiene manifest válido
 
 Se sirve por HTTPS o localhost
 
-🧪 Pruebas en modo Offline
+🧪 Modo Offline (Pruebas)
 
-Cargar la app
+Abrir la app
 
-Activar el modo offline en DevTools
+Activar el modo offline del navegador
 
-La app sigue funcionando:
+La app sigue funcionando porque:
 
-Archivos cargados desde caché
+HTML, CSS, JS están en caché
 
-Datos en IndexedDB
+IndexedDB contiene datos guardados
 
-Fallback a index.html si falla una vista
+La falla API no rompe la interfaz
 
 📘 Licencia
 
-Proyecto académico. Libre para uso educativo o personal.
+Este proyecto es de uso académico y puede modificarse libremente.
 
-👤 Autor
+🙌 Autor
 
-Proyecto desarrollado por Enrique Tapia.
+Proyecto desarrollado por Enrique Tapia como parte de una práctica académica.
