@@ -1,189 +1,215 @@
-# Sistema de Gestión de Departamentos - PWA
+📚 Biblioteca PWA
 
-Aplicación Web Progresiva (PWA) para la gestión de departamentos con funcionalidad offline y conexión a base de datos MySQL en XAMPP.
+Aplicación Web Progresiva (PWA) con soporte offline, CRUD, autenticación, IndexedDB, Service Worker y Notificaciones Push.
 
-## Características
+🚀 Descripción del Proyecto
 
-✅ **Landing Page personalizada** con diseño moderno y atractivo
-✅ **Sistema de Login** con autenticación local
-✅ **Módulo de Departamentos** con operaciones CRUD completas:
-   - **CREATE**: Crear nuevos departamentos
-   - **READ**: Leer y listar departamentos
-   - **UPDATE**: Editar departamentos existentes
-   - **DELETE**: Eliminar departamentos
-✅ **Almacenamiento Local**: 
-   - IndexedDB para operaciones CRUD principales
-   - localStorage para respaldo automático
-✅ **Funcionamiento Offline** mediante Service Worker
-✅ **Iconos y colores personalizados** con tema único
+Biblioteca PWA es una aplicación diseñada para gestionar libros, usuarios, calificaciones y notificaciones dentro de un entorno web moderno.
+Soporta funcionamiento sin conexión, envío de notificaciones push, almacenamiento en IndexedDB y sincronización con un servidor mediante APIs en PHP.
 
-## Estructura de la Base de Datos
+Esta PWA fue desarrollada como parte de un proyecto académico para demostrar:
 
-La tabla `departamentos` contiene los siguientes campos:
-- `id` (int, auto_increment, primary key)
-- `direccion` (varchar)
-- `numero` (int)
-- `descripcion` (varchar)
-- `estado` (varchar) - Valores: Disponible, Ocupado, Mantenimiento, Reservado
+Uso de Service Worker
 
-## Instalación y Uso
+Manejo de caché
 
-### Requisitos
-- **XAMPP** instalado y funcionando
-- Apache y MySQL deben estar activos
-- Navegador web moderno
+Funcionalidad offline
 
-### Pasos para ejecutar:
+Push Notifications
 
-1. **Configurar XAMPP**
-   - Iniciar Apache y MySQL desde el Panel de Control de XAMPP
+REST API con PHP y MySQL
 
-2. **Crear la base de datos**
-   - Abrir phpMyAdmin: `http://localhost/phpmyadmin`
-   - Ejecutar el script `database.sql` para crear la base de datos y tabla
-   - O importar directamente el archivo `database.sql`
+CRUD completo
 
-3. **Configurar el proyecto**
-   - Copiar la carpeta del proyecto a `C:\xampp\htdocs\ExamPracticoAWP`
-   - Verificar las credenciales en `config.php` (por defecto: usuario `root`, sin contraseña)
+Manejo de sesión sin frameworks
 
-4. **Acceder a la aplicación**
-   - Abrir en el navegador: `http://localhost/ExamPracticoAWP`
-   - La aplicación se conectará a MySQL cuando haya conexión
-   - Funciona offline usando IndexedDB como respaldo
+Manifest y archivo de instalación como App
 
-**Ver guía detallada en `INSTALACION.md`**
+📌 Características Principales
+✅ 1. PWA con modo offline
 
-### Generar Iconos PNG (Opcional)
+Service Worker configurado con:
 
-Para una mejor experiencia PWA, se recomienda generar iconos PNG desde el SVG:
+Cache First para archivos estáticos
 
-1. Abrir `icon.svg` en un editor de imágenes
-2. Exportar como PNG en tamaños 192x192 y 512x512
-3. Guardar como `icon-192.png` y `icon-512.png` en la raíz del proyecto
+Network First para API
 
-O usar herramientas online como:
-- https://realfavicongenerator.net/
-- https://www.pwabuilder.com/imageGenerator
+Manejo de errores offline
 
-## Funcionalidades Implementadas
+Sincronización en segundo plano
 
-### Landing Page
-- Diseño atractivo con gradientes y animaciones
-- Información sobre las características de la aplicación
-- Botón para iniciar sesión
+✅ 2. Notificaciones Push
 
-### Login
-- Autenticación simple (usuario y contraseña)
-- Persistencia de sesión en localStorage
-- Navegación fluida entre páginas
+Recepción de notificaciones mediante push event
 
-### Gestión de Departamentos
+Uso de VAPID Keys / Firebase Cloud Messaging (dependiendo de implementación)
 
-#### CREATE (Crear)
-- Formulario modal para crear nuevos departamentos
-- Validación de campos requeridos
-- Almacenamiento en IndexedDB
+Service Worker encargado de mostrar las notificaciones
 
-#### READ (Leer)
-- Tabla con todos los departamentos
-- Búsqueda en tiempo real
-- Estados visuales con badges de colores
-- Estado vacío cuando no hay datos
+Vibración, badge, icono y acciones
 
-#### UPDATE (Actualizar)
-- Edición de departamentos existentes
-- Mismo formulario modal que CREATE
-- Actualización en IndexedDB
+✅ 3. CRUD completo
 
-#### DELETE (Eliminar)
-- Eliminación con confirmación
-- Borrado permanente de IndexedDB
+Módulos gestionados:
 
-### Conexión a Base de Datos MySQL
+📘 Libros
 
-- **Backend PHP** con endpoints REST para operaciones CRUD
-- **Sincronización automática** entre MySQL e IndexedDB
-- **Modo offline**: Los cambios se guardan localmente y se sincronizan cuando hay conexión
-- **Base de datos**: `departamentos_db` en MySQL/XAMPP
+👤 Usuarios
 
-### Almacenamiento Local
+⭐ Calificaciones
 
-#### IndexedDB (Respaldo Offline)
-- Sincronización automática con MySQL
-- Base de datos: `DepartamentosDB`
-- Object Store: `departamentos` y `pending_operations`
-- Se usa cuando no hay conexión a internet
+🔔 Notificaciones (desde API)
 
-#### localStorage
-- Respaldo automático después de cada operación
-- Función `backupToLocalStorage()` se ejecuta automáticamente
-- Función `restoreFromLocalStorage()` disponible para restauración manual
+✅ 4. Autenticación
 
-### Service Worker
-- Cache de todos los recursos estáticos
-- Estrategia Cache First
-- Funcionamiento completo sin conexión
-- Actualización automática de cache
+Login sencillo mediante API
 
-## Personalización
+Control de acceso a módulos
 
-### Colores
-Los colores están definidos en `styles.css` usando variables CSS:
-- `--primary-color`: #6366f1 (Índigo)
-- `--secondary-color`: #fbbf24 (Amarillo)
-- `--success-color`: #10b981 (Verde)
-- `--danger-color`: #ef4444 (Rojo)
+Sesión persistente
 
-### Iconos
-- Iconos SVG personalizados en toda la aplicación
-- Logo principal en landing page
-- Iconos de acción en botones
-- Iconos de estado en badges
+✅ 5. IndexedDB
 
-## Navegadores Compatibles
+Base local para almacenar datos de libros y calificaciones
 
-- Chrome/Edge (recomendado)
-- Firefox
-- Safari (iOS 11.3+)
-- Opera
+Permite consultar datos sin internet
 
-## Notas Técnicas
+Sincronización cuando la red vuelve
 
-- La aplicación funciona completamente offline después de la primera carga
-- Los datos persisten en IndexedDB del navegador
-- El Service Worker se registra automáticamente
-- La autenticación es simple (sin backend) para demostración
+🗂️ Estructura de Archivos
+📁 raiz/
+│── index.html
+│── app.js
+│── styles.css
+│── manifest.json
+│── sw.js
+│── icon.svg
+│
+└── 📁 api/
+      ├── login.php
+      ├── libros.php
+      ├── calificaciones.php
+      └── notificaciones.php
 
-## Estructura de Archivos
+⚙️ Instalación
+1️⃣ Clonar el proyecto
+git clone https://github.com/tu-repo/biblioteca-pwa.git
 
-```
-ExamPracticoAWP/
-├── index.html          # Página principal (landing, login, módulo)
-├── styles.css          # Estilos personalizados
-├── app.js              # Lógica de la aplicación (conectado a PHP)
-├── sw.js               # Service Worker
-├── manifest.json       # Configuración PWA
-├── icon.svg            # Icono SVG
-├── config.php          # Configuración de conexión a MySQL
-├── database.sql        # Script SQL para crear base de datos
-├── api/
-│   ├── departamentos.php  # Endpoints CRUD para departamentos
-│   └── login.php          # Endpoint de autenticación
-├── INSTALACION.md      # Guía detallada de instalación
-└── README.md           # Este archivo
-```
+2️⃣ Configurar la API
 
-## Evaluación de Requisitos
+Editar /api/config.php con los datos de tu base de datos:
 
-✅ Iconos y colores personalizados
-✅ Landing page personalizada
-✅ Login funcional
-✅ 1 Módulo con 3+ funciones CRUD (CREATE, READ, UPDATE, DELETE)
-✅ 1 función CRUD con localStorage (backup automático)
-✅ Funcionar sin conexión (Service Worker)
+define("DB_HOST", "localhost");
+define("DB_USER", "root");
+define("DB_PASS", "");
+define("DB_NAME", "biblioteca");
 
----
+3️⃣ Servidor recomendado
 
-Desarrollado como aplicación web progresiva para gestión de departamentos.
+Para que el Service Worker funcione:
 
+Render
+
+XAMPP / WAMP / MAMP
+
+Apache o Nginx
+
+⚠️ No funciona ejecutando el HTML directamente con file://.
+
+🛠️ Tecnologías Utilizadas
+Tecnología	Uso
+HTML / CSS / JS	Interfaz y lógica
+IndexedDB	Base de datos offline
+Service Worker	Cache, sync, notificaciones
+PHP (API)	Backend y CRUD
+MySQL	Almacenamiento principal
+PWA (manifest + sw)	Instalación y offline
+Push API	Notificaciones
+🔔 Notificaciones Push
+
+El archivo sw.js maneja:
+
+Evento push
+
+Evento notificationclick
+
+Mostrar notificaciones con iconos, vibración y badge
+
+Comunicación con la app mediante postMessage()
+
+Ejemplo dentro del Service Worker:
+
+self.addEventListener('push', (event) => {
+    const data = event.data.json();
+    event.waitUntil(
+        self.registration.showNotification(data.title, {
+            body: data.body,
+            icon: './icon.svg',
+            badge: './icon.svg'
+        })
+    );
+});
+
+📡 API REST (PHP)
+/api/notificaciones.php
+
+Permite:
+
+✔ Obtener notificaciones
+
+✔ Crear nuevas notificaciones
+
+✔ Integrarse con tokens de push
+
+Ejemplo de cuerpo de notificación:
+
+{
+  "titulo": "Nuevo libro",
+  "mensaje": "Se ha añadido un nuevo libro a la biblioteca",
+  "modulo": "Libros",
+  "usuario": "admin"
+}
+
+📦 Manifest
+
+manifest.json permite instalar la app:
+
+Iconos
+
+Nombre de la app
+
+Startup screen
+
+Configuración de orientación
+
+📲 Instalación como App
+
+El navegador mostrará el botón "Instalar" automáticamente porque:
+
+Tiene Service Worker activo
+
+Tiene manifest válido
+
+Se sirve por HTTPS o localhost
+
+🧪 Modo Offline (Pruebas)
+
+Abrir la app
+
+Activar el modo offline del navegador
+
+La app sigue funcionando porque:
+
+HTML, CSS, JS están en caché
+
+IndexedDB contiene datos guardados
+
+La falla API no rompe la interfaz
+
+📘 Licencia
+
+Este proyecto es de uso académico y puede modificarse libremente.
+
+🙌 Autor
+
+Proyecto desarrollado por Enrique Tapia como parte de una práctica académica.
